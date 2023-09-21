@@ -1,0 +1,54 @@
+{% extends 'base.html' %} {% block content %}
+<h1 class="mt-5 text-center">Post SDE Problem</h1>
+<form method="post" class="container mt-5">
+  {% csrf_token %}
+
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="name"
+      name="name"
+      maxlength="100"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="link">Link:</label>
+    <input type="url" class="form-control" id="link" name="link" required />
+  </div>
+
+  <div class="form-group">
+    <label for="difficulty">Difficulty:</label>
+    <select class="form-control" id="difficulty" name="difficulty" required>
+      <option value="Easy">Easy</option>
+      <option value="Medium">Medium</option>
+      <option value="Hard">Hard</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="category">Category:</label>
+    <select class="form-control" id="category" name="category" required>
+      {% for i in category %}
+      <option value="{{i.id}}">{{i.name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="notes">Notes:</label>
+    <textarea
+      class="form-control"
+      id="notes"
+      name="notes"
+      rows="4"
+      cols="50"
+    ></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{% endblock %}

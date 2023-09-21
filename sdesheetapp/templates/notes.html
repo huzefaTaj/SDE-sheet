@@ -1,0 +1,22 @@
+<!-- notes.html -->
+
+{% extends 'base.html' %} {% block content %}
+<h1 class="mt-5 text-center">{{ sde_problem.name }} Notes</h1>
+
+<div class="container mt-5">
+  <form
+    method="post"
+    action="/notes/{{ sde_problem.id}}"
+    class="container mt-5"
+  >
+    {% csrf_token %}
+
+    <textarea name="nt" id="notes" class="form-control" rows="10" enable>
+{{ sde_problem.notes }}</textarea
+    >
+    <input type="submit" class="btn btn-primary mt-3" value="Update Notes" />
+  </form>
+</div>
+<!-- Add this script at the end of your 'notes.html' file -->
+
+{% endblock %}

@@ -1,0 +1,79 @@
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Get all checkboxes on the page
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+    checkboxes.forEach(function (checkbox) {
+      // Check if there is a stored value for this checkbox in local storage
+      const checkboxKey = `checkboxState_${checkbox.id}`;
+
+      // If there is a stored value, set the checkbox state accordingly
+      if (localStorage.getItem(checkboxKey) === "true") {
+        checkbox.checked = true;
+      } else {
+        checkbox.checked = false;
+      }
+
+      // Add an event listener to the checkbox to update local storage when it changes
+      checkbox.addEventListener("change", function () {
+        localStorage.setItem(checkboxKey, this.checked);
+      });
+    });
+
+    // Change text color based on difficulty
+    const difficultyCells = document.querySelectorAll('td[data-difficulty]');
+
+    difficultyCells.forEach(function (cell) {
+      const difficulty = cell.dataset.difficulty;
+      if (difficulty === "Easy") {
+        cell.style.color = "green";
+      } else if (difficulty === "Medium") {
+        cell.style.color = "#BCC50C";
+      } else if (difficulty === "Hard") {
+        cell.style.color = "red";
+      }
+    });
+  });
+</script>
+
+
+  {% extends 'base.html' %}
+
+  {% block content %}
+      <h1 class="mt-5 text-center">Blindecode 75+ sheet</h1>
+
+
+    <div class="container mt-5">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>Serial No.</th>
+            <th>Name</th>
+            <th>Link</th>
+            <th>Done</th>
+            <th>Difficulty</th>
+            <th>Category</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        
+        <tbody>
+          {% for i in sde_problems %}
+          <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.name}}</td>
+            <td><a href="{{i.link}}">{{i.name}}<a/></td>
+            <td><input type="checkbox" checked id="{{i.id}}" /></td>
+            <td data-difficulty="{{i.difficulty}}">{{i.difficulty}}</td>
+
+            <td>{{i.category}}</td>
+            <td><a href="/notes/{{i.id}}">Check Notes<a/></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    {% endblock %}
